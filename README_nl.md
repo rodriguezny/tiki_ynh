@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Tiki voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/tiki.svg)](https://ci-apps.yunohost.org/ci/apps/tiki/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/tiki.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/tiki.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/tiki)](https://ci-apps.yunohost.org/ci/apps/tiki/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/tiki)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/tiki)
 
 [![Tiki met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=tiki)
 
@@ -33,7 +35,7 @@ Tiki Wiki CMS Groupware is the Free / Libre / Open Source Web Application with t
 - Tiki Trackers is the built-in database web apps builder and low-code / no-code application framework.
 
 
-**Geleverde versie:** 27.0~ynh1
+**Geleverde versie:** 28.0~ynh1
 
 **Demo:** <https://tiki.org/Try-Tiki>
 
