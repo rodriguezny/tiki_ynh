@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "tiki"
@@ -5,7 +7,7 @@ name = "Tiki"
 description.en = "Wiki-based, content management system"
 description.fr = "Système de gestion de contenu basé sur Wiki"
 
-version = "27.0~ynh1"
+version = "28.0~ynh1"
 
 maintainers = []
 
@@ -17,7 +19,7 @@ admindoc = "https://doc.tiki.org"
 code = "https://gitlab.com/tikiwiki/tiki/"
 
 [integration]
-yunohost = ">= 11.2.29"
+yunohost = ">= 11.2.30"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
@@ -31,7 +33,6 @@ ram.build = "300M"
 ram.runtime = "50M"
 
 [install]
-
     [install.domain]
     type = "domain"
 
@@ -53,19 +54,24 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
 
+    [install.password]
+    type = "password"
+
 [resources]
 
     [resources.sources]
 
-        [resources.sources.main]
-        url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_27.x_Miaplacidus/27.0/tiki-27.0.tar.gz/download"
-        sha256 = "bcc79422239e9b17846082bec4341326518e95a5c058307e61933c2382245dbb"
-        format = "tar.gz"
+    [resources.sources.main]
+    url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_28.x_Castor/28.0/tiki-28.0.tar.gz/download"
+    sha256 = "bcaf7157e24528eca9156b3e3cb92fa4d05c25f840f076ad75899082fec20d45"
+    format = "tar.gz"
+    prefetch = false
 
-        [resources.sources.lts]
-        url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_24.x_Wolf_359/24.6/tiki-24.6.tar.gz/download"
-        sha256 = "1dc1a3f0236c79287b14bfe45eb789e8b0e5c89d2a9089bab496c61a2c73a9f0"
-        format = "tar.gz"
+    [resources.sources.lts]
+    url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_27.x_Miaplacidus/27.1/tiki-27.1.tar.gz/download"
+    sha256 = "b499c4812d2763b904ad5de2050715e1851bf159b665c3bd438be8db77e096e1"
+    format = "tar.gz"
+    prefetch = false
 
     [resources.system_user]
 
@@ -78,15 +84,7 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "tesseract-ocr, imagemagick, mariadb-server"
-
-    packages_from_raw_bash = """
-            if [[ "$release_cycle" == "regular" ]]; then 
-                echo "php8.1-bz2, php8.1-curl, php8.1-gd, php8.1-zip, php8.1-mysql, php8.1-xml, php8.1-mbstring, php8.1-intl"
-            else
-                echo "php7.4-bz2, php7.4-curl, php7.4-gd, php7.4-zip, php7.4-mysql, php7.4-xml, php7.4-mbstring, php7.4-intl"
-            fi
-        """
+    packages = "tesseract-ocr, imagemagick, mariadb-server, php8.1-bz2, php8.1-curl, php8.1-gd, php8.1-zip, php8.1-mysql, php8.1-xml, php8.1-mbstring, php8.1-intl, php8.1-tidy"
 
     [resources.database]
     type = "mysql"

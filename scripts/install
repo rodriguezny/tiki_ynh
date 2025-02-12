@@ -1,7 +1,15 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
+
+#=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
 
 ynh_app_setting_set --key=php_upload_max_filesize --value=256M
 
@@ -14,7 +22,7 @@ ynh_script_progression "Setting up source files..."
 source_id_to_use="main"
 if [[ "$release_cycle" == "longterm" ]]
 then
-    source_id_to_use="lts"
+	source_id_to_use="lts"
 fi
 
 ynh_setup_source --dest_dir="$install_dir" --source_id="$source_id_to_use"
@@ -24,41 +32,44 @@ ynh_setup_source --dest_dir="$install_dir" --source_id="$source_id_to_use"
 #=================================================
 ynh_script_progression "Adding system configurations related to $app..."
 
-ynh_config_add_nginx
-
+# Create a PHP-FPM config (with conf/extra_php-fpm.conf being appended to it)
 ynh_config_add_phpfpm
 
+# Create a dedicated NGINX config using the conf/nginx.conf template
+ynh_config_add_nginx
+
 #=================================================
-# ADD INITIAL CONFIGURATION
+# INSTALL APP
 #=================================================
-ynh_script_progression "Configuring $app..."
+ynh_script_progression "Installing $app..."
 
-# Define a function to execute commands with proper permissions
-exec_as_app() {
-  (cd "$install_dir" && ynh_exec_as_app \
-      php${php_version} --define apc.enable_cli=1 "$@")
-}
+pushd "$install_dir"
+	# Create database configuration file
+	php_exec_as_app console.php database:configure "$app" "$db_pwd" "$app"
 
-# Create database configuration file
-ynh_hide_warnings exec_as_app console.php database:configure "$app" "$db_pwd" "$app"
+	# Create database contents
+	php_exec_as_app console.php database:install
 
-# Create database contents
-ynh_hide_warnings exec_as_app console.php database:install
+	# Set default database directory
+	sed -i -e "s#storage/fgal#$data_dir#" lib/prefs/fgal.php
 
-# Set default database directory
-cd "$install_dir"
-sed -i -e "s#storage/fgal#$data_dir#" lib/prefs/fgal.php
-# Lock installer
-ynh_hide_warnings exec_as_app console.php installer:lock
+	# Lock installer
+	php_exec_as_app console.php installer:lock
 
-# Create data index
-ynh_hide_warnings exec_as_app console.php index:rebuild
+	# Create data index
+	php_exec_as_app console.php index:rebuild
 
-# Set on Long Term Support versions
-if [[ "$release_cycle" == "longterm" ]]
-then
-  ynh_hide_warnings exec_as_app console.php preferences:set tiki_release_cycle longterm
-fi
+	# Set on Long Term Support versions
+	if [[ "$release_cycle" == "longterm" ]]
+	then
+		php_exec_as_app console.php preferences:set tiki_release_cycle longterm
+	fi
+
+	# Create user
+	php_exec_as_app console.php users:password --no-interaction admin "$password"
+popd
+
+ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
 
 #=================================================
 # END OF SCRIPT
