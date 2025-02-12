@@ -1,0 +1,2 @@
+5 * * * * __APP__ /usr/bin/php__PHP_VERSION__ --define apc.enable_cli=1 __INSTALL_DIR__/console.php scheduler:run > /dev/null
+0 0 * * * __APP__ /usr/bin/php__PHP_VERSION__ --define apc.enable_cli=1 __INSTALL_DIR__/console.php index:rebuild >/dev/null 2>&1

@@ -1,1 +1,1 @@
-You can log in using the special `admin` username and the `admin` password. You will be asked to change the password immediately after login.
+You can log in using the special `admin` username and the password you provided during install.
