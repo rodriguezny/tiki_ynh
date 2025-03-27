@@ -7,7 +7,7 @@ name = "Tiki"
 description.en = "Wiki-based, content management system"
 description.fr = "Système de gestion de contenu basé sur Wiki"
 
-version = "28.0~ynh1"
+version = "28.3~ynh1"
 
 maintainers = []
 
@@ -62,14 +62,14 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_28.x_Castor/28.0/tiki-28.0.tar.gz/download"
-    sha256 = "bcaf7157e24528eca9156b3e3cb92fa4d05c25f840f076ad75899082fec20d45"
+    url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_28.x_Castor/28.3/tiki-28.3.tar.gz/download"
+    sha256 = "ee54bfe8514c7643713cc8687b31c686b6c2c6679a31f7487c86d4c91ef77b8c"
     format = "tar.gz"
     prefetch = false
 
     [resources.sources.lts]
-    url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_27.x_Miaplacidus/27.1/tiki-27.1.tar.gz/download"
-    sha256 = "b499c4812d2763b904ad5de2050715e1851bf159b665c3bd438be8db77e096e1"
+    url = "https://sourceforge.net/projects/tikiwiki/files/Tiki_27.x_Miaplacidus/27.2/tiki-27.2.tar.gz/download"
+    sha256 = "4c242f39cfe4e8e1eb8c6509b4adf2ab15106904b17067dbfb875a85424bbb0e"
     format = "tar.gz"
     prefetch = false
 
